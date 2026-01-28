@@ -10,7 +10,6 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { Platform } from 'react-native';
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export const unstable_settings = {
@@ -35,7 +34,6 @@ export default function RootLayout() {
     }
   }, [loaded]);
 
-  // Inject font styles for web
   useEffect(() => {
     if (Platform.OS === 'web') {
       const style = document.createElement('style');
