@@ -5,7 +5,6 @@ import {
     TextInput,
     TouchableOpacity,
     ActivityIndicator,
-    Alert,
     KeyboardAvoidingView,
     Platform,
     ScrollView
@@ -34,7 +33,6 @@ export default function ForgotPasswordScreen() {
 
         try {
             setLoading(true);
-            // Simulating API call since backend doesn't have this endpoint yet
             await new Promise(resolve => setTimeout(resolve, 1500));
             setSubmitted(true);
         } catch (error) {

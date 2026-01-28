@@ -33,7 +33,6 @@ export default function ExploreScreen() {
           setCuisines(response.data);
         }
       } catch (error) {
-        console.error('Error fetching cuisines:', error);
       } finally {
         setLoading(false);
       }
@@ -79,7 +78,6 @@ export default function ExploreScreen() {
           <TouchableOpacity
             style={[styles.cuisineCard, { backgroundColor: isDark ? '#1e1e1e' : '#fff' }]}
             onPress={() => {
-              console.log('Navigating to Home with cuisine:', item);
               router.push({
                 pathname: '/',
                 params: { cuisine: item }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
     StyleSheet,
     FlatList,
@@ -31,18 +31,15 @@ export default function FavoritesScreen() {
             if (showLoading) setLoading(true);
             const response: any = await recipeService.getFavorites();
             if (response.success) {
-                // Ensure we handle pagination structure if present
                 const data = response.data.recipes || response.data;
                 setFavorites(data);
             }
         } catch (error) {
-            console.error('Error fetching favorites:', error);
         } finally {
             if (showLoading) setLoading(false);
         }
     };
 
-    // Refresh when screen comes into focus
     useFocusEffect(
         useCallback(() => {
             fetchFavorites(false);

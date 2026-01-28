@@ -5,8 +5,7 @@ import {
     TouchableOpacity,
     TextInput,
     ScrollView,
-    ActivityIndicator,
-    Alert
+    ActivityIndicator
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import Icon from 'react-native-vector-icons/Ionicons';
