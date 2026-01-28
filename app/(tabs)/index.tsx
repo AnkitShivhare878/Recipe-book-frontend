@@ -57,7 +57,6 @@ export default function HomeScreen() {
 
   const fetchRecipes = async (query = '', mealType = 'All', cuisineFilter = '') => {
     try {
-      console.log('Fetching recipes...', { query, mealType, cuisineFilter });
       setLoading(true);
       let response: ApiResponse<PaginatedRecipes>;
 
@@ -71,17 +70,12 @@ export default function HomeScreen() {
         response = await recipeService.getRecipes(params) as any;
       }
 
-      console.log('API Response:', response);
-
       if (response && response.success) {
-        console.log('Successfully fetched recipes:', response.data.recipes.length);
         setRecipes(response.data.recipes);
       } else {
-        console.warn('API Success False:', response);
         alert('API error: ' + (response?.message || 'Unknown error'));
       }
     } catch (error: any) {
-      console.error('Error fetching recipes:', error);
       alert('Network Error: ' + error.message + '\nURL: ' + API_BASE_URL);
     } finally {
       setLoading(false);
@@ -91,7 +85,6 @@ export default function HomeScreen() {
 
   useEffect(() => {
     if (cuisine) {
-      console.log('Received cuisine filter:', cuisine);
       fetchRecipes('', 'All', cuisine as string);
     } else if (mealType) {
       setSelectedMealType(mealType as string);
@@ -137,7 +130,7 @@ export default function HomeScreen() {
       const res: any = await recipeService.addRecipeToMealPlan(plan._id, {
         day: targetDate.toISOString().split('T')[0],
         recipeId: recipe._id,
-        mealType: 'Lunch', // Default
+        mealType: 'Lunch',
         servings: recipe.servings || 1
       });
 

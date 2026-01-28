@@ -40,14 +40,10 @@ export default function LoginScreen() {
         }
 
         try {
-            console.log('Attempting login with:', email);
             setLoading(true);
             await login(email, password);
-            console.log('Login successful!');
-            alert('Login successful! Redirecting...');
             router.replace('/(tabs)');
         } catch (error: any) {
-            console.error('Login Error:', error);
             alert('Login Failed: ' + error.message + '\nCheck if backend is running at http://127.0.0.1:5001');
         } finally {
             setLoading(false);
@@ -61,7 +57,6 @@ export default function LoginScreen() {
                 style={{ flex: 1 }}
             >
                 <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-                    {/* Back Button */}
                     <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
                         <Icon name="arrow-back" size={24} color={isDark ? '#fff' : '#000'} />
                     </TouchableOpacity>
@@ -149,8 +144,6 @@ export default function LoginScreen() {
                                 <Icon name="logo-facebook" size={24} color="#4267B2" />
                             </TouchableOpacity>
                         </View>
-
-
                     </View>
                 </ScrollView>
             </KeyboardAvoidingView>
@@ -285,5 +278,4 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-
 });

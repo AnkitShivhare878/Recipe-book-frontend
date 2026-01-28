@@ -36,12 +36,10 @@ export default function MealPlanScreen() {
             if (showLoading) setLoading(true);
             const response: any = await recipeService.getMealPlans();
             if (response.success) {
-                // Ensure we handle pagination structure if present
                 const data = response.data.mealPlans || response.data;
                 setMealPlans(data);
             }
         } catch (error) {
-            console.error('Error fetching meal plans:', error);
         } finally {
             if (showLoading) setLoading(false);
         }
@@ -57,22 +55,15 @@ export default function MealPlanScreen() {
 
     const getMealsForDay = (dayName: string) => {
         if (!activePlan) return [];
-        // This is a simplification: in reality, we'd match dates
-        // For the demo, we'll try to match the day name or index
         return activePlan.meals?.filter((m: any) => {
             const date = new Date(m.day);
-            const dayIdx = date.getDay(); // 0 is Sunday, 1 is Monday...
-            const targetIdx = DAYS.indexOf(dayName) + 1; // Adjusting to match JS getDay (1-7 for Mon-Sun, with Sun being 0)
-            const adjustedTarget = targetIdx === 8 ? 1 : targetIdx; // Handle Monday
             const jsDay = date.getDay();
-            // Simple mapping for demo purposes
             const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
             return dayNames[jsDay] === dayName;
         }) || [];
     };
 
     const handleAddMeal = async (day: string) => {
-        // Automatically create a plan if one doesn't exist
         if (mealPlans.length === 0) {
             await handleCreatePlan();
         }

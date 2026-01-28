@@ -35,11 +35,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             try {
                 const token = await authStorage.getToken();
                 if (token) {
-                    // Fetch fresh user data from server
                     const response: any = await apiClient.get(ENDPOINTS.GET_ME);
                     if (response.success) {
                         const userData = response.data;
-                        // Normalize favorites to IDs only
                         if (userData.favoriteRecipes) {
                             userData.favoriteRecipes = userData.favoriteRecipes.map((f: any) => typeof f === 'string' ? f : (f._id || f.id));
                         }
@@ -53,8 +51,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                     }
                 }
             } catch (error) {
-                console.error('Error loading user:', error);
-                // Fallback to stored user if network fails
                 const storedUser = await authStorage.getUser();
                 if (storedUser) setUser(storedUser);
             } finally {
@@ -72,7 +68,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 const { token, ...userData } = response.data;
                 await authStorage.setToken(token);
 
-                // Fetch full profile to get favorites and other details
                 const profileRes: any = await apiClient.get(ENDPOINTS.GET_ME);
                 const fullUserData = profileRes.success ? profileRes.data : userData;
 
@@ -95,13 +90,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             await authStorage.clearAll();
             setUser(null);
         } catch (error) {
-            console.error('Error during logout:', error);
         }
     };
 
     const updateFavorites = async (newFavorites: any[]) => {
         if (user) {
-            // Normalize to IDs
             const favoriteIds = newFavorites.map(f => typeof f === 'string' ? f : (f._id || f.id));
             const updatedUser = { ...user, favoriteRecipes: favoriteIds };
             setUser(updatedUser);

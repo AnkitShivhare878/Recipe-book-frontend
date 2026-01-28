@@ -56,7 +56,6 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, params, onAddPress }) =
                 }
             }
         } catch (error: any) {
-            console.error('Favorite toggle error:', error);
             alert(error.message || 'Failed to update favorites');
         }
     };
@@ -66,7 +65,6 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, params, onAddPress }) =
             activeOpacity={0.9}
             style={styles.container}
             onPress={() => {
-                console.log('Navigating to recipe:', recipe._id);
                 router.push({
                     pathname: `/recipe/${recipe._id}`,
                     params: params
