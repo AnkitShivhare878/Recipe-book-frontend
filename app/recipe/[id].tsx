@@ -53,7 +53,6 @@ export default function RecipeDetailScreen() {
                 }
             }
         } catch (error: any) {
-            console.error('Favorite toggle error:', error);
             alert(error.message || 'Failed to update favorites');
         }
     };
@@ -66,7 +65,6 @@ export default function RecipeDetailScreen() {
 
         try {
             setScheduling(true);
-            // Get active meal plan first
             const planRes: any = await recipeService.getMealPlans();
             const plan = planRes.data.mealPlans?.find((p: any) => p.isActive) || planRes.data.mealPlans?.[0] || planRes.data?.[0];
 
@@ -75,7 +73,6 @@ export default function RecipeDetailScreen() {
                 return;
             }
 
-            // Simple date mapping for demo
             const today = new Date();
             const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
             const targetDayIdx = dayNames.indexOf(selectedDay);
@@ -122,7 +119,6 @@ export default function RecipeDetailScreen() {
                     setRecipe(response.data);
                 }
             } catch (error) {
-                console.error('Error fetching recipe details:', error);
             } finally {
                 setLoading(false);
             }
@@ -153,7 +149,6 @@ export default function RecipeDetailScreen() {
         <ThemedView style={styles.container}>
             <StatusBar style="light" />
             <ScrollView showsVerticalScrollIndicator={false}>
-                {/* Header Image */}
                 <View style={styles.headerContainer}>
                     <Image source={{ uri: recipe.image }} style={styles.image} />
                     <TouchableOpacity
@@ -167,7 +162,6 @@ export default function RecipeDetailScreen() {
                     </TouchableOpacity>
                 </View>
 
-                {/* Content */}
                 <View style={[styles.contentContainer, { backgroundColor: isDark ? '#121212' : '#fff' }]}>
                     <View style={styles.infoRow}>
                         <ThemedText style={styles.cuisineText}>{recipe.cuisine}</ThemedText>
@@ -179,7 +173,6 @@ export default function RecipeDetailScreen() {
 
                     <ThemedText type="title" style={styles.title}>{recipe.name}</ThemedText>
 
-                    {/* Meta Info boxes */}
                     <View style={styles.metaContainer}>
                         <View style={[styles.metaBox, { backgroundColor: isDark ? '#1e1e1e' : '#fff' }]}>
                             <Icon name="time-outline" size={20} color="#FF6B6B" />
@@ -203,7 +196,6 @@ export default function RecipeDetailScreen() {
                         </View>
                     </View>
 
-                    {/* Ingredients */}
                     <View style={styles.section}>
                         <ThemedText type="subtitle" style={styles.sectionTitle}>Ingredients</ThemedText>
                         {recipe.ingredients.map((ingredient, index) => (
@@ -214,7 +206,6 @@ export default function RecipeDetailScreen() {
                         ))}
                     </View>
 
-                    {/* Instructions */}
                     <View style={styles.section}>
                         <ThemedText type="subtitle" style={styles.sectionTitle}>Instructions</ThemedText>
                         {recipe.instructions.map((step, index) => (
@@ -227,7 +218,6 @@ export default function RecipeDetailScreen() {
                         ))}
                     </View>
 
-                    {/* Tags */}
                     <View style={styles.tagContainer}>
                         {recipe.tags.map((tag, index) => (
                             <View key={index} style={[styles.tag, { backgroundColor: isDark ? '#333' : '#f0f0f0' }]}>
@@ -236,7 +226,6 @@ export default function RecipeDetailScreen() {
                         ))}
                     </View>
 
-                    {/* Add to Meal Plan Button */}
                     <TouchableOpacity
                         style={[styles.mainButton, { opacity: scheduling ? 0.7 : 1 }]}
                         onPress={day ? () => handleAddToMealPlan(day as string) : showMealPicker}
