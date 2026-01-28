@@ -183,4 +183,22 @@ export const recipeService = {
             throw error;
         }
     },
+
+    async register(userData) {
+        try {
+            const response = await apiClient.post(ENDPOINTS.REGISTER, userData);
+            return response;
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    async deleteAccount() {
+        try {
+            const response = await apiClient.delete(ENDPOINTS.DELETE_ACCOUNT);
+            return response;
+        } catch (error) {
+            throw error;
+        }
+    },
 };
